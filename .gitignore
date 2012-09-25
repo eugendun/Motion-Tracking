@@ -31,3 +31,4 @@ $tf*/
 *.sdf
 *.opensdf
 *.vcxproj.filters
+*.ipch
