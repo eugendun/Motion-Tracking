@@ -1,16 +1,13 @@
-#include <boost/lambda/lambda.hpp>
 #include <iostream>
-#include <iterator>
-#include <algorithm>
-
+#include <string>
 int main()
 {
-	using namespace boost::lambda;
-	typedef std::istream_iterator<int> in;
 
-	std::for_each(in(std::cin), in(), std::cout << (_1 * 3) << " ");
-	
-	std::cout << "test" << std::endl;
+	std::string test = "=== Test Environment ===";
+
+	std::cout << test << std::endl;
+
+	std::cin >> test;
 
 	return 0;
 }
