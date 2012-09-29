@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
-int main()
-{
+int main() {
 
 	std::string test = "=== Test Environment ===";
 

@@ -1,57 +1,64 @@
 #include "MotionUnit.h"
 
+using namespace MoTing;
 
-MotionUnit::MotionUnit( string id )
-{
-
+MotionUnit::MotionUnit(string id) {
+	setId(id);
 }
 
-MotionUnit::~MotionUnit( void )
-{
+MotionUnit::~MotionUnit(void) {}
 
+
+string& MotionUnit::getId() {
+	return id;
 }
 
-string& MotionUnit::getId()
-{
-
+Quaternion& MotionUnit::getOrientation() {
+	return orientation;
 }
 
-quaternion<float>& MotionUnit::getOrientation()
-{
+Quaternion& MotionUnit::getRelativeOrientation() {
+	if (!parent) {
+		return orientation;
+	}
 
+	return parent->getRelativeOrientation() * orientation;
 }
 
-quaternion<float>& MotionUnit::getRelativeOrientation()
-{
 
+MotionUnit* MotionUnit::getParent() {
+	return parent;
 }
 
-MotionUnit* MotionUnit::getParent()
-{
-
+MotionUnitList& MotionUnit::getChilds() {
+	return childs;
 }
 
-vector<MotionUnit&>& MotionUnit::getChilds()
-{
-
+void MotionUnit::setId(string& newId) {
+	id = newId;
 }
 
-void MotionUnit::setId( string& id )
-{
-
+void MotionUnit::setOrientation(Quaternion& newOrientation) {
+	orientation = newOrientation;
 }
 
-void MotionUnit::setOrientation( quaternion<float>& newOrientation )
-{
-
+void MotionUnit::setParent(MotionUnit* pNewParent) {
+	parent = pNewParent;
 }
 
-void MotionUnit::setParent( MotionUnit* mUnit )
-{
-
+void MotionUnit::addChild(MotionUnit& rNewChild) {
+	childs.push_back(rNewChild);
 }
 
-void MotionUnit::addChild( MotionUnit& mUnit )
-{
+MotionUnitList::iterator getMotionListIterator(MotionUnitList& motionUnitList, string& sChildId) {
+	MotionUnitList::iterator it = motionUnitList.begin();
+	for (it; it != motionUnitList.end(); it++) {
+		if (it->getId() == sChildId) {
+			return it;
+		}
+	}
 
+	return it;
 }
+
+void MotionUnit::removeChildById(string sChildId) {}

@@ -4,9 +4,15 @@
 #include <vector>
 #include <boost/math/quaternion.hpp>
 
-using std::string;
-using std::vector;
-using boost::math::quaternion;
+using namespace std;
+
+namespace MoTing
+{
+
+class MotionUnit;
+
+typedef vector<MotionUnit> MotionUnitList;
+typedef boost::math::quaternion<float> Quaternion;
 
 class MotionUnit
 {
@@ -15,20 +21,21 @@ public:
 	virtual ~MotionUnit(void);
 
 	string& getId();
-	quaternion<float>& getOrientation();
-	quaternion<float>& getRelativeOrientation();
+	Quaternion& getOrientation();
+	Quaternion& getRelativeOrientation();
 	MotionUnit* getParent();
-	vector<MotionUnit&>& getChilds();
+	MotionUnitList& getChilds();
 
-	void setId(string& id);
-	void setOrientation(quaternion<float>& newOrientation);
-	void setParent(MotionUnit* mUnit);
-	void addChild(MotionUnit& mUnit);
+	void setId(string& newId);
+	void setOrientation(Quaternion& newOrientation);
+	void setParent(MotionUnit* pNewParent);
+	void addChild(MotionUnit& rNewChild);
+	void removeChildById(string sChildId);
 
 private:
 	string id;
-	quaternion<float> orientation;
+	Quaternion orientation;
 	MotionUnit* parent;
-	vector<MotionUnit&> childs;
+	MotionUnitList childs;
 };
-
+}
