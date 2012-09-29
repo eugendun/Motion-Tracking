@@ -50,15 +50,17 @@ void MotionUnit::addChild(MotionUnit& rNewChild) {
 	childs.push_back(rNewChild);
 }
 
-MotionUnitList::iterator getMotionListIterator(MotionUnitList& motionUnitList, string& sChildId) {
+MotionUnitList::iterator* getMotionListIterator(MotionUnitList& motionUnitList, string& sChildId) {
 	MotionUnitList::iterator it = motionUnitList.begin();
 	for (it; it != motionUnitList.end(); it++) {
 		if (it->getId() == sChildId) {
-			return it;
+			return &it;
 		}
 	}
 
-	return it;
+	return &it;
 }
 
-void MotionUnit::removeChildById(string sChildId) {}
+void MotionUnit::removeChildById(string sChildId) {
+	//MotionUnitList
+}
