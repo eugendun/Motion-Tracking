@@ -35,31 +35,31 @@ public:
 	/// Gets the id.
 	/// </summary>
 	/// <returns>MotionUnit identy respresents.</returns>
-	string& getId();
+	string getId();
 
 	/// <summary>
 	/// Gets the orientation.
 	/// </summary>
 	/// <returns>Current absolute orientation as a quaternion.</returns>
-	Quaternion& getOrientation();
+	Quaternion getOrientation();
 
 	/// <summary>
 	/// Gets the relative orientation.
 	/// </summary>
 	/// <returns>Current relative orientation as a quaternion.</returns>
-	Quaternion& getRelativeOrientation();
+	Quaternion getRelativeOrientation();
 
 	/// <summary>
 	/// Gets the parent.
 	/// </summary>
 	/// <returns>A Pointer to the superordinate MotionUnit. If no parent element is given, returns 0.</returns>
-	MotionUnit* getParent();
+	MotionUnit getParent();
 
 	/// <summary>
 	/// Gets all subordinate MotionUnits.
 	/// </summary>
 	/// <returns>MotionUnitList contains all subordinate MotionUnits.</returns>
-	MotionUnitList& getChilds();
+	MotionUnitList getChilds();
 
 	/// <summary>
 	/// Sets the id.

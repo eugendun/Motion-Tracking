@@ -9,15 +9,15 @@ MotionUnit::MotionUnit(string id) {
 MotionUnit::~MotionUnit(void) {}
 
 
-string& MotionUnit::getId() {
+string MotionUnit::getId() {
 	return id;
 }
 
-Quaternion& MotionUnit::getOrientation() {
+Quaternion MotionUnit::getOrientation() {
 	return orientation;
 }
 
-Quaternion& MotionUnit::getRelativeOrientation() {
+Quaternion MotionUnit::getRelativeOrientation() {
 	if (!parent) {
 		return orientation;
 	}
@@ -26,11 +26,11 @@ Quaternion& MotionUnit::getRelativeOrientation() {
 }
 
 
-MotionUnit* MotionUnit::getParent() {
-	return parent;
+MotionUnit MotionUnit::getParent() {
+	return *parent;
 }
 
-MotionUnitList& MotionUnit::getChilds() {
+MotionUnitList MotionUnit::getChilds() {
 	return childs;
 }
 
@@ -50,17 +50,19 @@ void MotionUnit::addChild(MotionUnit& rNewChild) {
 	childs.push_back(rNewChild);
 }
 
-MotionUnitList::iterator* getMotionListIterator(MotionUnitList& motionUnitList, string& sChildId) {
+MotionUnitList::iterator getMotionListIterator(MotionUnitList& motionUnitList, string& sChildId) {
 	MotionUnitList::iterator it = motionUnitList.begin();
 	for (it; it != motionUnitList.end(); it++) {
 		if (it->getId() == sChildId) {
-			return &it;
+			return it;
 		}
 	}
-
-	return &it;
+	return motionUnitList.end();
 }
 
 void MotionUnit::removeChildById(string sChildId) {
-	//MotionUnitList
+	MotionUnitList::iterator it = getMotionListIterator(childs, sChildId);
+	if (it != childs.end()) {
+		childs.erase(it);
+	}
 }
