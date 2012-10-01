@@ -2,9 +2,9 @@
 
 using namespace MoTing;
 
-MotionUnit::MotionUnit(string id) {
-	setId(id);
-}
+MotionUnit::MotionUnit(string id)
+	: id(id),
+	  parent(0) {}
 
 MotionUnit::~MotionUnit(void) {}
 
@@ -26,8 +26,9 @@ Quaternion MotionUnit::getRelativeOrientation() {
 }
 
 
-MotionUnit MotionUnit::getParent() {
-	return *parent;
+MotionUnit* MotionUnit::getParent() {
+	MotionUnit* temp = parent;
+	return temp;
 }
 
 MotionUnitList MotionUnit::getChilds() {

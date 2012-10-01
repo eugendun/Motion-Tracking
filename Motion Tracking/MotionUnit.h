@@ -53,7 +53,7 @@ public:
 	/// Gets the parent.
 	/// </summary>
 	/// <returns>A Pointer to the superordinate MotionUnit. If no parent element is given, returns 0.</returns>
-	MotionUnit getParent();
+	MotionUnit* getParent();
 
 	/// <summary>
 	/// Gets all subordinate MotionUnits.
@@ -72,12 +72,6 @@ public:
 	/// </summary>
 	/// <param name="newOrientation">The new orientation.</param>
 	void setOrientation(Quaternion& newOrientation);
-
-	/// <summary>
-	/// Sets the parent.
-	/// </summary>
-	/// <param name="pNewParent">Pointer to the superordinate MotionUnit.</param>
-	void setParent(MotionUnit* pNewParent);
 
 	/// <summary>
 	/// Adds the child.
@@ -111,5 +105,11 @@ private:
 	/// List of subordinated MotionUnits.
 	/// </summary>
 	MotionUnitList childs;
+
+	/// <summary>
+	/// Sets the parent.
+	/// </summary>
+	/// <param name="pNewParent">Pointer to the superordinate MotionUnit.</param>
+	void setParent(MotionUnit* pNewParent);
 };
 }
