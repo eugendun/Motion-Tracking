@@ -11,7 +11,7 @@ namespace MoTing
 
 class MotionUnit;
 
-typedef vector<MotionUnit> MotionUnitList;
+typedef vector<MotionUnit*> MotionUnitList;
 typedef boost::math::quaternion<float> Quaternion;
 
 /// <summary>
