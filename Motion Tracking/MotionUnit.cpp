@@ -27,8 +27,7 @@ Quaternion MotionUnit::getRelativeOrientation() {
 
 
 MotionUnit* MotionUnit::getParent() {
-	MotionUnit* temp = parent;
-	return temp;
+	return parent ? parent : 0;
 }
 
 MotionUnitList MotionUnit::getChilds() {
@@ -47,8 +46,13 @@ void MotionUnit::setParent(MotionUnit* pNewParent) {
 	parent = pNewParent;
 }
 
+// 1. set this as parent of rNewChild therefore it has to checked that rNewChild is not listed in list of old parent.
 void MotionUnit::addChild(MotionUnit& rNewChild) {
-	childs.push_back(rNewChild);
+	if (rNewChild.getParent()) {
+		rNewChild.getParent()->removeChildById(rNewChild.getId());
+	}
+	rNewChild.setParent(this);
+	this->childs.push_back(rNewChild);
 }
 
 MotionUnitList::iterator getMotionListIterator(MotionUnitList& motionUnitList, string& sChildId) {
@@ -64,6 +68,7 @@ MotionUnitList::iterator getMotionListIterator(MotionUnitList& motionUnitList, s
 void MotionUnit::removeChildById(string sChildId) {
 	MotionUnitList::iterator it = getMotionListIterator(childs, sChildId);
 	if (it != childs.end()) {
+		it->setParent(0);
 		childs.erase(it);
 	}
 }
