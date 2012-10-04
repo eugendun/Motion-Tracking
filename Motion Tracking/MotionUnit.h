@@ -11,7 +11,6 @@ namespace MoTing
 
 class MotionUnit;
 
-typedef vector<MotionUnit*> MotionUnitList;
 typedef boost::math::quaternion<float> Quaternion;
 
 /// <summary>
@@ -44,24 +43,6 @@ public:
 	Quaternion getOrientation();
 
 	/// <summary>
-	/// Gets the relative orientation.
-	/// </summary>
-	/// <returns>Current relative orientation as a quaternion.</returns>
-	Quaternion getRelativeOrientation();
-
-	/// <summary>
-	/// Gets the parent.
-	/// </summary>
-	/// <returns>A Pointer to the superordinate MotionUnit. If no parent element is given, returns 0.</returns>
-	MotionUnit* getParent();
-
-	/// <summary>
-	/// Gets all subordinate MotionUnits.
-	/// </summary>
-	/// <returns>MotionUnitList contains all subordinate MotionUnits.</returns>
-	MotionUnitList getChilds();
-
-	/// <summary>
 	/// Sets the id.
 	/// </summary>
 	/// <param name="newId">The new id.</param>
@@ -73,43 +54,8 @@ public:
 	/// <param name="newOrientation">The new orientation.</param>
 	void setOrientation(Quaternion& newOrientation);
 
-	/// <summary>
-	/// Adds the child.
-	/// </summary>
-	/// <param name="rNewChild">The subordinate MotionUnit.</param>
-	void addChild(MotionUnit& rNewChild);
-
-	/// <summary>
-	/// Removes the subordinate MotionUnit by id.
-	/// </summary>
-	/// <param name="sChildId">The id of a MotionUnit that should be removed from subordinate MotionUnits.</param>
-	void removeChildById(string sChildId);
-
 private:
-	/// <summary>
-	/// Identifies the MotionUnit.
-	/// </summary>
 	string id;
-
-	/// <summary>
-	/// The current orientation of the MotionUnit.
-	/// </summary>
 	Quaternion orientation;
-
-	/// <summary>
-	/// Pointer to the superordinate MotionUnit.
-	/// </summary>
-	MotionUnit* parent;
-
-	/// <summary>
-	/// List of subordinated MotionUnits.
-	/// </summary>
-	MotionUnitList childs;
-
-	/// <summary>
-	/// Sets the parent.
-	/// </summary>
-	/// <param name="pNewParent">Pointer to the superordinate MotionUnit.</param>
-	void setParent(MotionUnit* pNewParent);
 };
 }
