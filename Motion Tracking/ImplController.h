@@ -2,7 +2,6 @@
 
 #include "MotionUnit.h"
 #include "MoTingLib.h"
-#include <vector>
 #include <string>
 
 using MoTing::Quaternion;

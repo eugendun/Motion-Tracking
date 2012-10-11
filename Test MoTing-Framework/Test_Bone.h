@@ -14,9 +14,9 @@ public:
 		  b1("b1"),
 		  b2("b2", m2),
 		  b3("b3", m3) {
-		m1.setOrientation(_getRandomQuaternion());
-		m2.setOrientation(_getRandomQuaternion());
-		m3.setOrientation(_getRandomQuaternion());
+		m1.setOrientation(MoTing::getRandomQuaternion());
+		m2.setOrientation(MoTing::getRandomQuaternion());
+		m3.setOrientation(MoTing::getRandomQuaternion());
 	}
 	~Test_Bone() {}
 
@@ -43,7 +43,7 @@ public:
 		BOOST_CHECK(b1.getRotation() == m1.getOrientation());
 
 		b1.detachMotionUnit();
-		m1.setOrientation(_getRandomQuaternion());
+		m1.setOrientation(MoTing::getRandomQuaternion());
 		BOOST_CHECK(b1.getRotation() != m1.getOrientation());
 
 		b1.attachMotionUnit(m1);

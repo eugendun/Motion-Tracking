@@ -1,16 +1,7 @@
 #include "Bone.h"
 
-/// <summary>
-/// Initializes a new instance of the <see cref="Bone" /> class.
-/// </summary>
-/// <param name="name">The name.</param>
 Bone::Bone(string name)
 	: name(name) {
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Bone" /> class.
-	/// </summary>
-	/// <param name="name">The name.</param>
-	/// <param name="imu">The imu.</param>
 	motionUnit = NULL;
 	parent = NULL;
 }
@@ -31,10 +22,6 @@ std::string Bone::getName() {
 	return name;
 }
 
-/// <summary>
-/// Gets the parent.
-/// </summary>
-/// <returns></returns>
 Bone* Bone::getParent() {
 	return parent;
 }
@@ -56,10 +43,6 @@ BoneList::iterator getBoneListIterator(string& name, BoneList& list) {
 /**
  *  Each subordinate bone should be appear only once in the child list.
  */
-/// <summary>
-/// Adds the child.
-/// </summary>
-/// <param name="bone">The bone.</param>
 void Bone::addChild(Bone& bone) {
 	BoneList::iterator it = getBoneListIterator(bone.getName(), childBones);
 	if (it == childBones.end()) {
@@ -68,18 +51,10 @@ void Bone::addChild(Bone& bone) {
 		}
 		bone.setParent(this);
 		Bone* pBone = &bone;
-		/// <summary>
-		/// Removes the name of the child by.
-		/// </summary>
-		/// <param name="name">The name.</param>
 		childBones.push_back(pBone);
 	}
 }
 
-/// <summary>
-/// Removes the name of the child by.
-/// </summary>
-/// <param name="name">The name.</param>
 void Bone::removeChildByName(string& name) {
 	BoneList::iterator it = getBoneListIterator(name, childBones);
 	if (it != childBones.end()) {
@@ -97,10 +72,6 @@ MoTing::Quaternion Bone::getRotation() {
 		return motionUnit->getOrientation();
 	}
 
-	/// <summary>
-	/// Attaches the motion unit.
-	/// </summary>
-	/// <param name="imu">The imu.</param>
 	Quaternion parentRot = parent->getRotation();
 	return parentRot * motionUnit->getOrientation() * boost::math::conj(parentRot);
 }

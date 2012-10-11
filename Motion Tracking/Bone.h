@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+using std::vector;
+
 class Bone;
 
 typedef vector<Bone*> BoneList;

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "YostControllerImpl.h"
 
 MotionUnitList YostControllerImpl::findMotionUnits() {

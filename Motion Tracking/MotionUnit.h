@@ -2,6 +2,7 @@
 
 #include "MoTingLib.h"
 #include <string>
+#include <vector>
 
 using std::string;
 using MoTing::Quaternion;
