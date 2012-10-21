@@ -11,8 +11,7 @@ using std::pair;
 
 class FakeSensor;
 
-// map<SensorID, <FakeSensor, ThreadID>>
-typedef map<string, pair<FakeSensor,boost::thread>> FakeSensorWorkerMap;
+typedef map<string, FakeSensor> FakeSensorWorkerMap;
 typedef map<string, MotionUnit*> SensorMotionUnitMap;
 
 class FakeControllerImpl : public ImplController
@@ -37,9 +36,20 @@ private:
 class FakeSensor
 {
 public:
+	FakeSensor();
+	~FakeSensor();
+
+	void Start();
+	void Stop();
+	void operator()();
+
 	void setOrientation(Quaternion orientation);
 	Quaternion getOrientation();
 
 private:
+	boost::thread* m_thread;
+	bool m_mustStop;
+	boost::mutex m_mustStopMutex;
+
 	Quaternion orientation;
 };
