@@ -3,15 +3,16 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time.hpp>
 
-string getSensorId(int i) {
+string getIdAsString(int i) {
 	return string("sensor_").append(boost::lexical_cast<string>(i));
 }
 
 const int FakeControllerImpl::SensorNumber = 10;
 
-FakeControllerImpl::FakeControllerImpl() {
+FakeControllerImpl::FakeControllerImpl()
+	: tareQuaternion(Quaternion(0.0, 0.0, 0.0, 0.0)) {
 	for (int i = 0; i < SensorNumber; i++) {
-		string sensorId(getSensorId (i));
+		string sensorId(getIdAsString (i));
 		sensorWorkers[sensorId] = FakeSensor();
 		sensorMotionUnits[sensorId] = new MotionUnit(sensorId);
 	}
@@ -28,74 +29,64 @@ FakeControllerImpl::~FakeControllerImpl() {
 	}
 }
 
-MotionUnitList FakeControllerImpl::findMotionUnits() {
-	MotionUnitList					motionUnits;
+MotionUnitList& FakeControllerImpl::findMotionUnits() {
 	SensorMotionUnitMap::iterator	it;
 	for (it = sensorMotionUnits.begin(); it != sensorMotionUnits.end(); it++) {
 		motionUnits.push_back(it->second);
 	}
-
 	return motionUnits;
 }
 
-void FakeControllerImpl::tareWithQuaternion(Quaternion quat) {
+void FakeControllerImpl::tareWithQuaternion(const Quaternion& quat) {
 	// TODO
 }
 
-void FakeControllerImpl::startTracking(string id) {
+void FakeControllerImpl::startTracking(const string& id) {
 	FakeSensorWorkerMap::iterator it = sensorWorkers.find(id);
 	if (it != sensorWorkers.end()) {
-		it->second.Start();
+		it->second.start();	
 	}
 }
 
-void FakeControllerImpl::stopTracking(string id) {
+void FakeControllerImpl::stopTracking(const string& id) {
 	FakeSensorWorkerMap::iterator it = sensorWorkers.find(id);
 	if (it != sensorWorkers.end()) {
-		it->second.Stop();
+		
 	}
 }
 
-FakeSensor::FakeSensor() {
-	m_thread = NULL;
-	m_mustStop = false;
+FakeSensor::FakeSensor()
+	: orientation(Quaternion(0.0, 0.0, 0.0, 0.0)) {}
+
+FakeSensor::~FakeSensor() {}
+
+FakeSensor::FakeSensor(const FakeSensor& rSensor)
+	: orientation(rSensor.orientation) {}
+
+FakeSensor& FakeSensor::operator=(const FakeSensor& rSensor) {
+	orientation = rSensor.orientation;
+	return *this;
 }
 
-FakeSensor::~FakeSensor() {
-	if (m_thread != NULL) {
-		delete m_thread;
-	}
+void FakeSensor::setOrientation(const Quaternion& rOrientation) {
+	orientation = rOrientation;
 }
 
-void FakeSensor::Start() {
-	m_thread = new boost::thread(boost::ref(*this));
-}
-
-void FakeSensor::Stop() {
-	m_mustStopMutex.lock();
-	m_mustStop = true;
-	m_mustStopMutex.unlock();
-
-	if (m_thread != NULL) {
-		m_thread->join();
-	}
-}
-
-void FakeSensor::operator()() {
-	bool mustStop;
-	do {
-		setOrientation(MoTing::getRandomQuaternion());
-		boost::this_thread::sleep(boost::posix_time::seconds(1));
-		m_mustStopMutex.lock();
-		mustStop = m_mustStop;
-		m_mustStopMutex.unlock();
-	} while (mustStop == false);
-}
-
-void FakeSensor::setOrientation(Quaternion orientation) {
-	this->orientation = orientation;
-}
-
-Quaternion FakeSensor::getOrientation() {
+Quaternion& FakeSensor::getOrientation() {
 	return orientation;
+}
+
+void myThreads(FakeSensor& sensor) {
+	while (true) {
+		sensor.setOrientation(MoTing::getRandomQuaternion());
+		boost::this_thread::yield();
+	}
+}
+
+void FakeSensor::start() {
+	t = boost::thread(myThreads, *this);
+}
+
+void FakeSensor::stop() {
+
 }

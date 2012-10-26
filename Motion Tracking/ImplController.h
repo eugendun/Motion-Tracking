@@ -9,8 +9,8 @@ using MoTing::Quaternion;
 class ImplController
 {
 public:
-	virtual MotionUnitList findMotionUnits() = 0;
-	virtual void tareWithQuaternion(Quaternion quat) = 0;
-	virtual void startTracking(string id) = 0;
-	virtual void stopTracking(string id) = 0;
+	virtual MotionUnitList& findMotionUnits() = 0;
+	virtual void tareWithQuaternion(const Quaternion& quat) = 0;
+	virtual void startTracking(const string& id) = 0;
+	virtual void stopTracking(const string& id) = 0;
 };

@@ -22,34 +22,40 @@ public:
 	FakeControllerImpl();
 	~FakeControllerImpl();
 
-	MotionUnitList findMotionUnits();
-	void tareWithQuaternion(Quaternion quat);
-	void startTracking(string id);
-	void stopTracking(string id);
+	MotionUnitList& findMotionUnits();
+	void tareWithQuaternion(const Quaternion& quat);
+	void startTracking(const string& id);
+	void stopTracking(const string& id);
 
 private:
+	MotionUnitList motionUnits;
 	FakeSensorWorkerMap sensorWorkers;
 	SensorMotionUnitMap sensorMotionUnits;
 	Quaternion tareQuaternion;
+
+	FakeControllerImpl(const FakeControllerImpl& rController);
+	FakeControllerImpl& operator=(const FakeControllerImpl& rController);
 };
+
+/**
+ *  ================================================
+ */
 
 class FakeSensor
 {
 public:
 	FakeSensor();
 	~FakeSensor();
+	FakeSensor(const FakeSensor& rSensor);
+	FakeSensor& operator=(const FakeSensor& rSensor);
 
-	void Start();
-	void Stop();
-	void operator()();
+	void setOrientation(const Quaternion& rOrientation);
+	Quaternion& getOrientation();
 
-	void setOrientation(Quaternion orientation);
-	Quaternion getOrientation();
+	void start();
+	void stop();
 
 private:
-	boost::thread* m_thread;
-	bool m_mustStop;
-	boost::mutex m_mustStopMutex;
-
 	Quaternion orientation;
+	boost::thread t;
 };

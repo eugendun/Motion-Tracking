@@ -8,7 +8,7 @@ namespace MoTing
 {
 	typedef boost::math::quaternion<float> Quaternion;
 
-	Quaternion static getRandomQuaternion() {
+	static Quaternion getRandomQuaternion() {
 		boost::minstd_rand						intgen;
 		boost::uniform_01<boost::minstd_rand>	gen(intgen);
 		return Quaternion((float)gen(), (float)gen(), (float)gen(), (float)gen());

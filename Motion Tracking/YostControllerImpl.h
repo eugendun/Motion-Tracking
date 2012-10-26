@@ -5,8 +5,11 @@
 class YostControllerImpl : public ImplController
 {
 public:
-	MotionUnitList findMotionUnits();
-	void tareWithQuaternion(Quaternion quat);
-	void startTracking(string id);
-	void stopTracking(string id);
+	MotionUnitList& findMotionUnits();
+	void tareWithQuaternion(const Quaternion& quat);
+	void startTracking(const string& id);
+	void stopTracking(const string& id);
+
+private:
+	MotionUnitList motionUnits;
 };
