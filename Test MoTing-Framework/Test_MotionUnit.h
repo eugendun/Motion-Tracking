@@ -22,7 +22,8 @@ public:
 		m.setId((string)"m");
 		BOOST_REQUIRE(m.getId() == "m");
 
-		Quaternion expOrientation = MoTing::getRandomQuaternion();
+		MoTing::QuatGenerator quatGen;
+		Quaternion expOrientation = quatGen.generate();
 		m.setOrientation(expOrientation);
 		BOOST_REQUIRE(m.getOrientation() == expOrientation);
 	}
