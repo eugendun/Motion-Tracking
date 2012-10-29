@@ -6,11 +6,6 @@
 /// <param name="name">The name.</param>
 Bone::Bone(string name)
 	: name(name) {
-		/// <summary>
-/// Initializes a new instance of the <see cref="Bone" /> class.
-/// </summary>
-/// <param name="name">The name.</param>
-/// <param name="imu">The imu.</param>
 	motionUnit = NULL;
 	parent = NULL;
 }
@@ -68,10 +63,6 @@ void Bone::addChild(Bone& bone) {
 		}
 		bone.setParent(this);
 		Bone* pBone = &bone;
-		/// <summary>
-/// Removes the name of the child by.
-/// </summary>
-/// <param name="name">The name.</param>
 		childBones.push_back(pBone);
 	}
 }
@@ -92,15 +83,11 @@ MoTing::Quaternion Bone::getRotation() {
 	if (!motionUnit) {
 		return Quaternion(0.0, 0.0, 0.0, 0.0);
 	}
-	
+
 	if (!parent) {
 		return motionUnit->getOrientation();
 	}
 
-	/// <summary>
-/// Attaches the motion unit.
-/// </summary>
-/// <param name="imu">The imu.</param>
 	Quaternion parentRot = parent->getRotation();
 	return parentRot * motionUnit->getOrientation() * boost::math::conj(parentRot);
 }

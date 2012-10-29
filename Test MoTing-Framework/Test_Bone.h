@@ -1,9 +1,8 @@
 #pragma once
 
+#include <MoTingLib.h>
 #include <Bone.h>
-
 #include <boost/test/included/unit_test.hpp>
-#include <boost/math/quaternion.hpp>
 
 class Test_Bone
 {
@@ -15,9 +14,10 @@ public:
 		  b1("b1"),
 		  b2("b2", m2),
 		  b3("b3", m3) {
-		m1.setOrientation(this->_getRandomQuaternion());
-		m2.setOrientation(this->_getRandomQuaternion());
-		m3.setOrientation(this->_getRandomQuaternion());
+		MoTing::QuatGenerator quatGen;
+		m1.setOrientation(quatGen.generate());
+		m2.setOrientation(quatGen.generate());
+		m3.setOrientation(quatGen.generate());
 	}
 	~Test_Bone() {}
 
@@ -44,7 +44,8 @@ public:
 		BOOST_CHECK(b1.getRotation() == m1.getOrientation());
 
 		b1.detachMotionUnit();
-		m1.setOrientation(this->_getRandomQuaternion());
+		MoTing::QuatGenerator quatGen;
+		m1.setOrientation(quatGen.generate());
 		BOOST_CHECK(b1.getRotation() != m1.getOrientation());
 
 		b1.attachMotionUnit(m1);
@@ -88,10 +89,4 @@ public:
 private:
 	Bone b1, b2, b3;
 	MotionUnit m1, m2, m3;
-
-	Quaternion _getRandomQuaternion() {
-		boost::minstd_rand						intgen;
-		boost::uniform_01<boost::minstd_rand>	gen(intgen);
-		return Quaternion((float)gen(), (float)gen(), (float)gen(), (float)gen());
-	}
 };

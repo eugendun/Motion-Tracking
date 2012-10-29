@@ -5,6 +5,7 @@
 #include <vector>
 
 using namespace MoTing;
+using std::vector;
 
 class Bone;
 
@@ -50,7 +51,7 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	Quaternion getRotation();
-	
+
 	/// <summary>
 	/// Adds a subordinate bone.
 	/// </summary>

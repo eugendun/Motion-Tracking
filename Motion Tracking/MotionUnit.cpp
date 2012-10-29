@@ -1,25 +1,27 @@
 #include "MotionUnit.h"
 
-using namespace MoTing;
-
-MotionUnit::MotionUnit(string id)
-	: id(id) {}
+MotionUnit::MotionUnit(const string& id)
+	: id(id),
+	  orientation(Quaternion(0.0, 0.0, 0.0, 0.0)) {}
 
 MotionUnit::~MotionUnit(void) {}
 
+MotionUnit::MotionUnit(const MotionUnit& other)
+	: id(other.id),
+	  orientation(other.orientation) {}
 
-string MotionUnit::getId() {
+const string& MotionUnit::getId() const {
 	return id;
 }
 
-Quaternion MotionUnit::getOrientation() {
+const Quaternion& MotionUnit::getOrientation() const {
 	return orientation;
 }
 
-void MotionUnit::setId(string& newId) {
+void MotionUnit::setId(const string& newId) {
 	id = newId;
 }
 
-void MotionUnit::setOrientation(Quaternion& newOrientation) {
+void MotionUnit::setOrientation(const Quaternion& newOrientation) {
 	orientation = newOrientation;
 }
